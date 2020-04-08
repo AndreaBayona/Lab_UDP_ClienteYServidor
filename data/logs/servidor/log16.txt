@@ -1,0 +1,4 @@
+Comienza envio de paquetes a los clientes...
+Integridad del archivo para el cliente/127.0.0.1 : 63307 
+El archivo NO llego correctamenteIntegridad del archivo para el cliente/127.0.0.1 : 63308 
+El archivo NO llego correctamente

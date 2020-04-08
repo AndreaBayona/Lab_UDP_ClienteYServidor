@@ -19,13 +19,15 @@ public class AuxServer extends Thread {
     InetAddress adressCliente;
     int portCliente;
     private DatagramSocket socket;
+    private Servidor server;
 
-    public AuxServer(File archivo, int bufferSize, InetAddress adressCliente, int portCliente, DatagramSocket socket) {
+    public AuxServer(File archivo, int bufferSize, InetAddress adressCliente, int portCliente, DatagramSocket socket, Servidor server) {
         this.archivo = archivo;
         this.bufferSize = bufferSize;
         this.adressCliente = adressCliente;
         this.portCliente = portCliente;
         this.socket = socket;
+        this.server = server;
     }
 
     public void sendPackets() throws Throwable {
@@ -35,12 +37,21 @@ public class AuxServer extends Thread {
         buffer = new byte[bufferSize];
         int count0 = 0;
 
+       long  tiempo1 = System.currentTimeMillis();
+
         while ((in = bis.read(buffer)) != -1) {
             System.out.println("SERVIDOR: enviando al cliente " + adressCliente.toString() + " : " + portCliente);
             packet = new DatagramPacket(buffer, buffer.length, adressCliente, portCliente);
             socket.send(packet);
             System.out.println("SERVIDOR: tamanio paquete " + packet.getData().length);
         }
+        long  tiempo2 = System.currentTimeMillis();
+
+        long tiempoTotal = tiempo2 - tiempo1;
+        String log = "Tiempo de trasferencia de archivos para el cliente" + adressCliente.toString() + " : " + portCliente+" \n";
+        log += ""+ tiempoTotal +" milisegundos \n";
+        server.registrarEnLog(log);
+
         count0 += buffer.length;
         System.out.println("SERVIDOR: count enviado " + count0);
         buffer = new byte[bufferSize];

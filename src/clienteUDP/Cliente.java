@@ -4,6 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Cliente {
 
@@ -33,6 +37,7 @@ public class Cliente {
 	private DatagramSocket socket;
 	private InetAddress addressServer;
 	private int id;
+	private long tiempoEjecucion;
 
 	//==================================================
 	// CONSTRUCTORES
@@ -76,7 +81,9 @@ public class Cliente {
 		confirmarPaquetes(buffer, packet);
 
 		//El cliente recibe el hash original y confirma la integridad
-		recibirHashOriginalYconfirmarIntegridad(buffer, packet,digest);
+		boolean integridad = recibirHashOriginalYconfirmarIntegridad(buffer, packet,digest);
+
+		construirLog(integridad, sizeArchivo);
 
 		//Fin del la comunicacion
 		socket.close();
@@ -107,6 +114,7 @@ public class Cliente {
 		int count = 0;
 		socket.setSoTimeout(20000); //Si pasa mas de 30 segundos sin recibir archivos se sale del loop
 		buffer = new byte[TAMANIO_BUFFER];
+		long t1 = System.currentTimeMillis();
 		while(count < tamanioArch){
 			try {
 				packet = new DatagramPacket(buffer, buffer.length);
@@ -125,7 +133,8 @@ public class Cliente {
 				break;
 			}
 		}//fin del while
-
+		long t2 = System.currentTimeMillis();
+		tiempoEjecucion = t2 - t1;
 		bos.close();
 		return digest;
 	}
@@ -136,7 +145,7 @@ public class Cliente {
 
 	}
 
-	private void recibirHashOriginalYconfirmarIntegridad(byte[] buffer, DatagramPacket packet, MessageDigest digest) throws IOException {
+	private boolean recibirHashOriginalYconfirmarIntegridad(byte[] buffer, DatagramPacket packet, MessageDigest digest) throws IOException {
 		buffer = new byte[256];
 		packet = new DatagramPacket(buffer, buffer.length);
 		socket.receive(packet);
@@ -145,10 +154,12 @@ public class Cliente {
 		if(comprobarHash(digest, hashOriginal)){
 			System.out.print("Archivo llego correctamente");
 			enviarStringDatagrama(INTEGRIDAD_OK, buffer, packet);
+			return true;
 		}
 		else{
 			System.out.print("Archivo NO llego correctamente");
 			enviarStringDatagrama(INTEGRIDAD_ERROR, buffer, packet);
+			return false;
 		}
 	}
 
@@ -200,6 +211,41 @@ public class Cliente {
 		return idLog;
 	}
 
+	/**
+	 * Metodo encargado de construir un Log con una estructura dada para guardar y luego registrarlo por medio del metodo registrarEnLog
+	 */
+	public void construirLog(boolean b, int sizeArchivo) {
+		Date date = Calendar.getInstance().getTime();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		String strDate = dateFormat.format(date);
+
+
+		String log = "---------------------- PRUEBA" + id + " ----------------------\n";
+		log += "Fecha y Hora: " + strDate + "\n";
+		log += "------------------ INFO ARCHIVO ENVIADO --------------------\n";
+		log += "tamanio archivo: " + sizeArchivo + " bytes\n";
+		log += "-------------------INFO CLIENTE-------------------------------\n";
+		log += "id Cliente: " + id + " \n";
+		log += "IP Cliente: " + socket.getLocalAddress() + " \n";
+		log += "Port Cliente: " + socket.getLocalPort() + " \n";
+		log += "--------------------- CONEXIONES ----------------------\n";
+		log += "Tiempo ejecucion: " + tiempoEjecucion + " milisegundos\n";
+		log += "Integridad de los datos : " + b + "\n";
+		log += "\n";
+
+		registrarEnLog(log);
+	}
+	public synchronized void registrarEnLog(String s){
+		File f = new File(RUTA_LOGS+"log"+id+".txt");
+		try {
+			FileWriter fwriter = new FileWriter(f,true);
+			fwriter.append(s);
+			fwriter.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	//==================================================
 	// MAIN

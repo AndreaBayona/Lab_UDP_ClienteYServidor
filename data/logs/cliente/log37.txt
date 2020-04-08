@@ -1,0 +1,12 @@
+---------------------- PRUEBA37 ----------------------
+Fecha y Hora: 2020-04-08 03:04:30
+------------------ INFO ARCHIVO ENVIADO --------------------
+tamanio archivo: 74590705 bytes
+-------------------INFO CLIENTE-------------------------------
+id Cliente: 37 
+IP Cliente: 0.0.0.0/0.0.0.0 
+Port Cliente: 55042 
+--------------------- CONEXIONES ----------------------
+Tiempo ejecucion: 23011 milisegundos
+Integridad de los datos : false
+

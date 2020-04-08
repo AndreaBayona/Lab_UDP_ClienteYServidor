@@ -1,0 +1,12 @@
+---------------------- PRUEBA36 ----------------------
+Fecha y Hora: 2020-04-08 03:04:29
+------------------ INFO ARCHIVO ENVIADO --------------------
+tamanio archivo: 74590705 bytes
+-------------------INFO CLIENTE-------------------------------
+id Cliente: 36 
+IP Cliente: 0.0.0.0/0.0.0.0 
+Port Cliente: 55041 
+--------------------- CONEXIONES ----------------------
+Tiempo ejecucion: 25008 milisegundos
+Integridad de los datos : false
+

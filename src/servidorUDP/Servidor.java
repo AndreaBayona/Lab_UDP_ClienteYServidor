@@ -4,6 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -71,6 +75,8 @@ public class Servidor {
         byte[] buffer = new byte[0];
         DatagramPacket packet = null;
 
+        crearLogPrueba();
+
         //El servidor recibe los clientes y a cada uno le envia el tamanio del archivo
         //Si despues de 10 segundos no se conecta la cantidad esperada de clientes cierra la conexion
         recibirClientesYEnviarTamanioArchivo(buffer, packet);
@@ -128,12 +134,14 @@ public class Servidor {
         int portCliente = 0;
         buffer = new byte[TAMANIO_BUFFER];
         int count0 = 0;
+        String log = "Comienza envio de paquetes a los clientes...\n";
+        registrarEnLog(log);
         for (int i = 0; i < clientes.length; i++) {
             System.out.println("SERVIDOR: enviando paquetes a los clientes...");
             portCliente = (int) clientes[i][1];
             adressCliente = (InetAddress) clientes[i][0];
             System.out.println(adressCliente.toString());
-            AuxServer envio = new AuxServer(file, TAMANIO_BUFFER, adressCliente, portCliente, socket);
+            AuxServer envio = new AuxServer(file, TAMANIO_BUFFER, adressCliente, portCliente, socket, this);
             envio.start();
         }
 
@@ -161,16 +169,18 @@ public class Servidor {
             else if (confirmacion.equals(INTEGRIDAD_OK)) {
                 System.out.println("SERVIDOR: el archivo del cliente " + adressCliente.getCanonicalHostName() + ": " + portCliente);
                 System.out.println("SERVIDOR: llego correctamente");
+                String log = "Integridad del archivo para el cliente" + adressCliente.toString() + " : " + portCliente+" \n";
+                log+= "El archivo llego correctamente\n";
+                registrarEnLog(log);
 
-                //TODO
-                //REGISTRAR EN LOG
 
             }
             else if (confirmacion.equals(INTEGRIDAD_ERROR)) {
                 System.out.println("SERVIDOR: el archivo del cliente " + adressCliente.getCanonicalHostName() + ": " + portCliente);
                 System.out.println("SERVIDOR: NO llego correctamente");
-                //TODO
-                //REGISTRAR EN LOG
+                String log = "Integridad del archivo para el cliente" + adressCliente.toString() + " : " + portCliente+" \n";
+                log+= "El archivo NO llego correctamente\n";
+                registrarEnLog(log);
             }
             count++;
         }
@@ -246,6 +256,35 @@ public class Servidor {
         fw.close();
 
         return idLog;
+    }
+
+    private void crearLogPrueba() throws IOException {
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(date);
+        File file = new File(RUTA_ARCHIVOS + nombreArchivo);
+
+        String log = "---------------------- PRUEBA" + idPrueba +" ----------------------\n";
+        log += "Fecha y Hora: " + strDate + "\n";
+        log += "------------------ INFO ARCHIVO ENVIADO --------------------\n";
+        log += "nombre: " + nombreArchivo + "\n";
+        log += "tamaño: " + file.length() + " bytes\n";
+        log += "--------------------- CONEXIONES ----------------------\n";
+        log += "\n";
+
+        registrarEnLog(log);
+    }
+
+    public synchronized void registrarEnLog(String s){
+        File f = new File(RUTA_LOGS+"log"+idPrueba+".txt");
+        try {
+            FileWriter fwriter = new FileWriter(f,true);
+            fwriter.append(s);
+            fwriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //==================================================

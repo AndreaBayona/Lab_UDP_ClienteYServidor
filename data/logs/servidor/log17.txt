@@ -1,0 +1,5 @@
+Comienza envio de paquetes a los clientes...
+Tiempo de trasferencia de archivos para el cliente/127.0.0.1 : 54703 
+2088 milisegundos 
+Tiempo de trasferencia de archivos para el cliente/127.0.0.1 : 54706 
+2518 milisegundos 
