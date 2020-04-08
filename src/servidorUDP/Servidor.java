@@ -51,7 +51,7 @@ public class Servidor {
             this.maxNumeroClientes = maxNumeroClientes;
             socket = new DatagramSocket(SOCKET_SERVIDOR);
             clientes = new Object[maxNumeroClientes][2];
-            file = new File (RUTA_ARCHIVOS+nombreArchivo);
+            file = new File(RUTA_ARCHIVOS + nombreArchivo);
             hash = getFileHash(file);
             idPrueba = numeroPrueba(); //ID PARA EL NOMBRE DEL LOG
         } catch (SocketException e) {
@@ -79,13 +79,13 @@ public class Servidor {
         enviarPaquetesArchivosAClientes(buffer, packet);
 
         //Cuando el servidor recibe la confirmacion del archivo recibido, envia el hash
-        enviarHashAClientes(buffer, packet);
+        enviarHashAClientesYConfirmarIntegridad(buffer, packet);
 
-        //El cliente recibe la confirmacion de integridad del archivo de cada cliente
+        //El servidor  recibe la confirmacion de integridad del archivo de cada cliente
 
     }
 
-    private void recibirClientesYEnviarTamanioArchivo(byte[] buffer,  DatagramPacket packet) throws IOException {
+    private void recibirClientesYEnviarTamanioArchivo(byte[] buffer, DatagramPacket packet) throws IOException {
         int count = 0;
         InetAddress adressCliente = null;
         int portCliente = 0;
@@ -121,40 +121,31 @@ public class Servidor {
     }
 
 
+    private void enviarPaquetesArchivosAClientes(byte[] buffer, DatagramPacket packet) throws IOException {
 
-    private void enviarPaquetesArchivosAClientes(byte[] buffer,  DatagramPacket packet) throws IOException {
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
         int in;
         InetAddress adressCliente = null;
         int portCliente = 0;
         buffer = new byte[TAMANIO_BUFFER];
         int count0 = 0;
-
-        while ((in = bis.read(buffer)) != -1) {
+        for (int i = 0; i < clientes.length; i++) {
             System.out.println("SERVIDOR: enviando paquetes a los clientes...");
-            for (int i = 0; i < clientes.length; i++) {
-                portCliente = (int) clientes[i][1];
-                adressCliente = (InetAddress) clientes[i][0];
-                System.out.println("SERVIDOR: enviando al cliente " + adressCliente.toString() + " : " + portCliente);
-                packet = new DatagramPacket(buffer, buffer.length, adressCliente, portCliente);
-                socket.send(packet);
-                System.out.println("SERVIDOR: tamanio paquete " + packet.getData().length);
-            }
-            count0 += buffer.length;
-            System.out.println("SERVIDOR: count enviado " +count0);
-            buffer = new byte[TAMANIO_BUFFER];
+            portCliente = (int) clientes[i][1];
+            adressCliente = (InetAddress) clientes[i][0];
+            System.out.println(adressCliente.toString());
+            AuxServer envio = new AuxServer(file, TAMANIO_BUFFER, adressCliente, portCliente, socket);
+            envio.start();
         }
 
-        bis.close();
     }
 
-    private void enviarHashAClientes(byte[] buffer,  DatagramPacket packet) throws IOException {
+    private void enviarHashAClientesYConfirmarIntegridad(byte[] buffer, DatagramPacket packet) throws IOException {
         int count = 0;
         InetAddress adressCliente = null;
         int portCliente = 0;
         String confirmacion;
         buffer = new byte[256];
-        while (count < maxNumeroClientes) {
+        while (count < clientes.length*2) {
 
             packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
@@ -162,37 +153,12 @@ public class Servidor {
             adressCliente = packet.getAddress();
             portCliente = packet.getPort();
             confirmacion = new String(packet.getData(), 0, packet.getLength());
-
+            System.out.println(confirmacion);
             if (confirmacion.equals(ARCHIVOS_RECIBIDOS)) {
                 enviarDatagramaString(hash, buffer, packet, adressCliente, portCliente);
-                 System.out.println("SERVIDOR: Hash enviado " + hash);
+                System.out.println("SERVIDOR: Hash enviado " + hash);
             }
-            count++;
-        }
-    }
-
-    private void enviarDatagramaString(String msg, byte[] buffer,  DatagramPacket packet,  InetAddress adressCliente, int portCliente) throws IOException {
-        buffer = msg.getBytes();
-        packet = new DatagramPacket(buffer, buffer.length, adressCliente, portCliente);
-        socket.send(packet);
-    }
-
-    private void recibirConfirmacionIntegridadClientes(byte[] buffer,  DatagramPacket packet) throws IOException {
-        int count = 0;
-        InetAddress adressCliente = null;
-        int portCliente = 0;
-        String confirmacion;
-        buffer = new byte[256];
-        while (count < maxNumeroClientes) {
-
-            packet = new DatagramPacket(buffer, buffer.length);
-            socket.receive(packet);
-            System.out.println("SERVIDOR: paquete recibido " + packet.toString());
-            adressCliente = packet.getAddress();
-            portCliente = packet.getPort();
-            confirmacion = new String(packet.getData(), 0, packet.getLength());
-
-            if (confirmacion.equals(INTEGRIDAD_OK)) {
+            else if (confirmacion.equals(INTEGRIDAD_OK)) {
                 System.out.println("SERVIDOR: el archivo del cliente " + adressCliente.getCanonicalHostName() + ": " + portCliente);
                 System.out.println("SERVIDOR: llego correctamente");
 
@@ -200,15 +166,53 @@ public class Servidor {
                 //REGISTRAR EN LOG
 
             }
-            else if(confirmacion.equals(INTEGRIDAD_ERROR)){
+            else if (confirmacion.equals(INTEGRIDAD_ERROR)) {
                 System.out.println("SERVIDOR: el archivo del cliente " + adressCliente.getCanonicalHostName() + ": " + portCliente);
-                System.out.println("SERVIDOR: llego NO correctamente");
+                System.out.println("SERVIDOR: NO llego correctamente");
                 //TODO
                 //REGISTRAR EN LOG
             }
             count++;
         }
     }
+
+    private void enviarDatagramaString(String msg, byte[] buffer, DatagramPacket packet, InetAddress adressCliente, int portCliente) throws IOException {
+        buffer = msg.getBytes();
+        packet = new DatagramPacket(buffer, buffer.length, adressCliente, portCliente);
+        socket.send(packet);
+    }
+
+//    private void recibirConfirmacionIntegridadClientes(byte[] buffer, DatagramPacket packet) throws IOException {
+//        int count = 0;
+//        InetAddress adressCliente = null;
+//        int portCliente = 0;
+//        String confirmacion;
+//        buffer = new byte[256];
+//        while (count < maxNumeroClientes) {
+//
+//            packet = new DatagramPacket(buffer, buffer.length);
+//            socket.receive(packet);
+//            System.out.println("SERVIDOR: paquete recibido " + packet.toString());
+//            adressCliente = packet.getAddress();
+//            portCliente = packet.getPort();
+//            confirmacion = new String(packet.getData(), 0, packet.getLength());
+//
+//            if (confirmacion.equals(INTEGRIDAD_OK)) {
+//                System.out.println("SERVIDOR: el archivo del cliente " + adressCliente.getCanonicalHostName() + ": " + portCliente);
+//                System.out.println("SERVIDOR: llego correctamente");
+//
+//                //TODO
+//                //REGISTRAR EN LOG
+//
+//            } else if (confirmacion.equals(INTEGRIDAD_ERROR)) {
+//                System.out.println("SERVIDOR: el archivo del cliente " + adressCliente.getCanonicalHostName() + ": " + portCliente);
+//                System.out.println("SERVIDOR: llego NO correctamente");
+//                //TODO
+//                //REGISTRAR EN LOG
+//            }
+//            count++;
+//        }
+//    }
 
     private String getFileHash(File archivo) throws IOException, NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-1");
@@ -258,10 +262,9 @@ public class Servidor {
         String nombreArchivoScan = scan.nextLine();
         String nombreArchivo = "";
 
-        if(nombreArchivoScan.equals("1")){
+        if (nombreArchivoScan.equals("1")) {
             nombreArchivo = "video1.mp4";
-        }
-        else{
+        } else {
             nombreArchivo = "video2.mp4";
         }
         System.out.println("Ingrese la cantidad conexiones (max 25)");

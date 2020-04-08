@@ -10,3 +10,5 @@ data/multimedia/cliente/descarga3.mp4
 *.xml
 
 .idea/
+
+*.mp4
