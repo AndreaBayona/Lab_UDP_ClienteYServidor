@@ -3,16 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="a87ecad1-8415-46b8-9b57-fd7f5def7b64" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UDP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/UDP.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/logs/cliente/num.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/logs/cliente/num.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/logs/servidor/num.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/logs/servidor/num.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/clienteUDP/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/clienteUDP/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/servidorUDP/AuxServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/servidorUDP/AuxServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/servidorUDP/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/servidorUDP/Servidor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -27,18 +33,31 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Lab 4/Laboratorio4_redes_TCP/Lab4_TCP" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/GLoad 1.3.jar!/" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Application.Cliente">
+  <component name="RunManager" selected="Application.Generator">
     <configuration name="Cliente" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="clienteUDP.Cliente" />
       <module name="UDP" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="clienteUDP.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Generator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.Generator" />
+      <module name="UDP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -62,11 +81,13 @@
     <list>
       <item itemvalue="Application.Cliente" />
       <item itemvalue="Application.Servidor" />
+      <item itemvalue="Application.Generator" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Cliente" />
+        <item itemvalue="Application.Generator" />
         <item itemvalue="Application.Servidor" />
+        <item itemvalue="Application.Cliente" />
       </list>
     </recent_temporary>
   </component>
@@ -95,7 +116,7 @@
       <workItem from="1586238060514" duration="13031000" />
       <workItem from="1586284129022" duration="9177000" />
       <workItem from="1586325947939" duration="1700000" />
-      <workItem from="1586371082730" duration="5145000" />
+      <workItem from="1586371082730" duration="5898000" />
     </task>
     <servers />
   </component>
@@ -115,30 +136,30 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2728" y="428" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/64.0.1216.720/1920.0.1920.1080@1920.0.1920.1080" timestamp="1586238080960" />
-    <state x="453" y="115" key="FileChooserDialogImpl" timestamp="1586374599998">
+    <state x="453" y="115" key="FileChooserDialogImpl" timestamp="1586376570554">
       <screen x="64" y="0" width="1216" height="720" />
     </state>
-    <state x="453" y="115" key="FileChooserDialogImpl/64.0.1216.720@64.0.1216.720" timestamp="1586374599998" />
-    <state width="1173" height="243" key="GridCell.Tab.0.bottom" timestamp="1586376281328">
+    <state x="453" y="115" key="FileChooserDialogImpl/64.0.1216.720@64.0.1216.720" timestamp="1586376570554" />
+    <state width="1173" height="280" key="GridCell.Tab.0.bottom" timestamp="1586376868883">
       <screen x="64" y="0" width="1216" height="720" />
     </state>
     <state width="1877" height="355" key="GridCell.Tab.0.bottom/64.0.1216.720/1920.0.1920.1080@1920.0.1920.1080" timestamp="1586251118776" />
-    <state width="1173" height="243" key="GridCell.Tab.0.bottom/64.0.1216.720@64.0.1216.720" timestamp="1586376281328" />
-    <state width="1173" height="243" key="GridCell.Tab.0.center" timestamp="1586376281328">
+    <state width="1173" height="280" key="GridCell.Tab.0.bottom/64.0.1216.720@64.0.1216.720" timestamp="1586376868883" />
+    <state width="1173" height="280" key="GridCell.Tab.0.center" timestamp="1586376868882">
       <screen x="64" y="0" width="1216" height="720" />
     </state>
     <state width="1877" height="355" key="GridCell.Tab.0.center/64.0.1216.720/1920.0.1920.1080@1920.0.1920.1080" timestamp="1586251118776" />
-    <state width="1173" height="243" key="GridCell.Tab.0.center/64.0.1216.720@64.0.1216.720" timestamp="1586376281328" />
-    <state width="1173" height="243" key="GridCell.Tab.0.left" timestamp="1586376281327">
+    <state width="1173" height="280" key="GridCell.Tab.0.center/64.0.1216.720@64.0.1216.720" timestamp="1586376868882" />
+    <state width="1173" height="280" key="GridCell.Tab.0.left" timestamp="1586376868880">
       <screen x="64" y="0" width="1216" height="720" />
     </state>
     <state width="1877" height="355" key="GridCell.Tab.0.left/64.0.1216.720/1920.0.1920.1080@1920.0.1920.1080" timestamp="1586251118775" />
-    <state width="1173" height="243" key="GridCell.Tab.0.left/64.0.1216.720@64.0.1216.720" timestamp="1586376281327" />
-    <state width="1173" height="243" key="GridCell.Tab.0.right" timestamp="1586376281328">
+    <state width="1173" height="280" key="GridCell.Tab.0.left/64.0.1216.720@64.0.1216.720" timestamp="1586376868880" />
+    <state width="1173" height="280" key="GridCell.Tab.0.right" timestamp="1586376868883">
       <screen x="64" y="0" width="1216" height="720" />
     </state>
     <state width="1877" height="355" key="GridCell.Tab.0.right/64.0.1216.720/1920.0.1920.1080@1920.0.1920.1080" timestamp="1586251118776" />
-    <state width="1173" height="243" key="GridCell.Tab.0.right/64.0.1216.720@64.0.1216.720" timestamp="1586376281328" />
+    <state width="1173" height="280" key="GridCell.Tab.0.right/64.0.1216.720@64.0.1216.720" timestamp="1586376868883" />
     <state width="1173" height="220" key="GridCell.Tab.1.bottom" timestamp="1586375557578">
       <screen x="64" y="0" width="1216" height="720" />
     </state>
@@ -159,6 +180,10 @@
       <screen x="64" y="0" width="1216" height="720" />
     </state>
     <state x="347" y="59" width="678" height="602" key="NewModule_or_Project.wizard/64.0.1216.720@64.0.1216.720" timestamp="1586326294031" />
+    <state x="153" y="0" key="SettingsEditor" timestamp="1586376574558">
+      <screen x="64" y="0" width="1216" height="720" />
+    </state>
+    <state x="153" y="0" key="SettingsEditor/64.0.1216.720@64.0.1216.720" timestamp="1586376574558" />
     <state x="369" y="184" key="com.intellij.ide.util.TipDialog" timestamp="1586325947740">
       <screen x="64" y="0" width="1216" height="720" />
     </state>

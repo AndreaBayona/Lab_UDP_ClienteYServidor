@@ -1,0 +1,12 @@
+---------------------- PRUEBA39 ----------------------
+Fecha y Hora: 2020-14-08 03:14:32
+------------------ INFO ARCHIVO ENVIADO --------------------
+tamanio archivo: 74590705 bytes
+-------------------INFO CLIENTE-------------------------------
+id Cliente: 39 
+IP Cliente: 0.0.0.0/0.0.0.0 
+Port Cliente: 49666 
+--------------------- CONEXIONES ----------------------
+Tiempo ejecucion: 23049 milisegundos
+Integridad de los datos : false
+

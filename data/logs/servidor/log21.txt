@@ -1,0 +1,8 @@
+---------------------- PRUEBA21 ----------------------
+Fecha y Hora: 2020-13-08 03:13:42
+------------------ INFO ARCHIVO ENVIADO --------------------
+nombre: video1.mp4
+tamaño: 74590705 bytes
+--------------------- CONEXIONES ----------------------
+
+Comienza envio de paquetes a los clientes...

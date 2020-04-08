@@ -1,0 +1,16 @@
+---------------------- PRUEBA22 ----------------------
+Fecha y Hora: 2020-14-08 03:14:05
+------------------ INFO ARCHIVO ENVIADO --------------------
+nombre: video1.mp4
+tamaño: 74590705 bytes
+--------------------- CONEXIONES ----------------------
+
+Comienza envio de paquetes a los clientes...
+Tiempo de trasferencia de archivos para el cliente/127.0.0.1 : 49665 
+1847 milisegundos 
+Tiempo de trasferencia de archivos para el cliente/127.0.0.1 : 49666 
+3043 milisegundos 
+Integridad del archivo para el cliente/127.0.0.1 : 49665 
+El archivo NO llego correctamente
+Integridad del archivo para el cliente/127.0.0.1 : 49666 
+El archivo NO llego correctamente

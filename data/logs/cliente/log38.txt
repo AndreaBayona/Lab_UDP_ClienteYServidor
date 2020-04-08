@@ -1,0 +1,12 @@
+---------------------- PRUEBA38 ----------------------
+Fecha y Hora: 2020-14-08 03:14:31
+------------------ INFO ARCHIVO ENVIADO --------------------
+tamanio archivo: 74590705 bytes
+-------------------INFO CLIENTE-------------------------------
+id Cliente: 38 
+IP Cliente: 0.0.0.0/0.0.0.0 
+Port Cliente: 49665 
+--------------------- CONEXIONES ----------------------
+Tiempo ejecucion: 21930 milisegundos
+Integridad de los datos : false
+

@@ -119,7 +119,7 @@ public class Cliente {
 			try {
 				packet = new DatagramPacket(buffer, buffer.length);
 				socket.receive(packet);
-				System.out.println("CLIENTE: paquete recibido "+ packet.getData() + "Buffer " + buffer.length);
+				System.out.println("CLIENTE" + id+": paquete recibido "+ packet.getData() + "Buffer " + buffer.length);
 
 				digest.update(buffer, 0, Math.min(buffer.length, tamanioArch - count));
 				bos.write(buffer, 0,  buffer.length);
@@ -141,7 +141,7 @@ public class Cliente {
 
 	private void confirmarPaquetes(byte[] buffer, DatagramPacket packet) throws IOException {
 		enviarStringDatagrama(ARCHIVOS_RECIBIDOS, buffer, packet);
-		System.out.println("CLIENTE: enviada confirmacion de paquetes recibidos");
+		System.out.println("CLIENTE" + id+ ": enviada confirmacion de paquetes recibidos");
 
 	}
 
@@ -150,7 +150,7 @@ public class Cliente {
 		packet = new DatagramPacket(buffer, buffer.length);
 		socket.receive(packet);
 		String hashOriginal = new String(packet.getData(), 0, packet.getLength());
-		System.out.println("CLIENTE: recibido hash del archivo " + hashOriginal);
+		System.out.println("CLIENTE" + id+": recibido hash del archivo " + hashOriginal);
 		if(comprobarHash(digest, hashOriginal)){
 			System.out.print("Archivo llego correctamente");
 			enviarStringDatagrama(INTEGRIDAD_OK, buffer, packet);
@@ -182,8 +182,8 @@ public class Cliente {
 			sb.append(Integer.toString((bytes2[i] & 0xff) + 0x100, 16).substring(1));
 		}
 		String ss = sb.toString();
-		System.out.println("CLIENTE: hash calculado: " + ss);
-		System.out.println("CLIENTE: hash enviado: " + hash);
+		System.out.println("CLIENTE" + id+": hash calculado: " + ss);
+		System.out.println("CLIENTE" + id+": hash enviado: " + hash);
 		boolean iguales = ss.equals(hash);
 
 		if (iguales)
